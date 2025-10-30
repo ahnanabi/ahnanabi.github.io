@@ -146,3 +146,134 @@ html, body {
 @media (prefers-reduced-motion: reduce){
   .item{ transition: none; }
 }
+/* =========================
+   ⬇⬇ 픽셀 아이템 기본 스타일 ⬇⬇
+========================= */
+
+.item {
+  position: absolute;
+  z-index: 2; /* 오로라 위 */
+  cursor: pointer;
+  image-rendering: pixelated;
+  /* ✅ 반응형 & 작은 크기 기본값 */
+  width: clamp(60px, 5vw, 100px);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* 마우스 올릴 때 살짝 떠오르는 효과 */
+.item:hover {
+  transform: translateY(-3px) scale(1.05);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+/* =========================
+   ⬇⬇ 위치 (예시) ⬇⬇
+========================= */
+/* 아래 좌표는 1920×1080 기준으로 적당히 떨어져 있게 잡았어 */
+.person1 { left: 8%;   top: 68%; }
+.person2 { left: 20%;  top: 72%; }
+.person3 { left: 33%;  top: 66%; }
+.person4 { left: 45%;  top: 70%; }
+.hamster  { left: 60%; top: 75%; }
+.plant1   { left: 72%; top: 76%; }
+.plant2   { left: 84%; top: 80%; }
+.mirror   { left: 15%; top: 40%; }
+.trash    { left: 90%; top: 85%; }
+
+/* 반응형으로 화면이 작아지면 더 작게 */
+@media (max-width: 768px) {
+  .item {
+    width: clamp(40px, 8vw, 80px);
+  }
+}
+/* === 공통: 부드러운 미세 동작 === */
+.item {
+  /* transform 기반 애니메이션이 더 자연스럽게 보이도록 */
+  transform-origin: 50% 90%;
+  animation: idle-float 3.8s ease-in-out infinite,
+             idle-sway  7.5s ease-in-out infinite;
+}
+
+/* 사람들: 살짝 더 생동감 있게(빈도↑) */
+.person1 { animation-duration: 3.4s, 6.8s; }
+.person2 { animation-duration: 3.6s, 7.2s; }
+.person3 { animation-duration: 3.2s, 6.5s; }
+.person4 { animation-duration: 3.9s, 7.8s; }
+
+/* 햄스터: 가끔 납작-통통 점프 */
+.hamster {
+  animation: idle-float 3.6s ease-in-out infinite,
+             idle-sway  7.2s ease-in-out infinite,
+             hamster-bop 9s ease-in-out infinite;
+  animation-delay: .1s, .3s, 1.2s;
+}
+
+/* 화분: 은은한 빛/채도 호흡 + 미세 흔들림 */
+.plant1, .plant2 {
+  animation: idle-float 4.2s ease-in-out infinite,
+             idle-sway  8.2s ease-in-out infinite,
+             idle-glow  5.5s ease-in-out infinite;
+  animation-delay: .2s, .4s, .8s;
+}
+
+/* 거울: 살짝 반짝이는 듯한 느낌 */
+.mirror {
+  animation: idle-float 4s ease-in-out infinite,
+             idle-sway  8s ease-in-out infinite,
+             idle-shimmer 6s ease-in-out infinite;
+  animation-delay: .15s, .35s, .5s;
+}
+
+/* 쓰레기통: 가끔 덜컹-기웃 */
+.trash {
+  animation: idle-float 4.4s ease-in-out infinite,
+             idle-sway  8.8s ease-in-out infinite,
+             trash-wobble 12s cubic-bezier(.2,.7,.2,1) infinite;
+  animation-delay: .1s, .25s, 2s;
+}
+
+/* === Keyframes === */
+@keyframes idle-float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-2.2%); }
+  100% { transform: translateY(0); }
+}
+@keyframes idle-sway {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(-1.2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 은은한 밝기/채도 호흡 */
+@keyframes idle-glow {
+  0%   { filter: saturate(110%) brightness(100%); }
+  50%  { filter: saturate(125%) brightness(112%); }
+  100% { filter: saturate(110%) brightness(100%); }
+}
+
+/* 거울 반짝임 */
+@keyframes idle-shimmer {
+  0%, 100% { filter: brightness(105%); }
+  45%      { filter: brightness(130%); }
+  50%      { filter: brightness(145%); }
+  55%      { filter: brightness(130%); }
+}
+
+/* 햄스터 점프/찐득 모션 (아주 작게) */
+@keyframes hamster-bop {
+  0%, 92%, 100% { transform: translateY(0) scale(1,1); }
+  95%           { transform: translateY(-6%) scale(1.02,.98); }
+  97%           { transform: translateY(0) scale(.98,1.02); }
+}
+
+/* 쓰레기통 가끔 덜컹 */
+@keyframes trash-wobble {
+  0%, 94%, 100% { transform: rotate(0deg); }
+  96%           { transform: rotate(-2deg); }
+  98%           { transform: rotate(1.4deg); }
+}
+
+/* 접근성: 모션 최소화 환경이면 정지 */
+@media (prefers-reduced-motion: reduce){
+  .item { animation: none !important; }
+}
