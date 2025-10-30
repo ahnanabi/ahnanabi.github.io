@@ -140,7 +140,7 @@ html, body {
 .person2 {
   left: 45.11%;
   top: 86.34%;
-  scale: 2;                        /* ✅ 크기 2배 (애니메이션과 충돌 없음) */
+  scale: 4;                        /* ✅ 크기 2배 (애니메이션과 충돌 없음) */
   animation-delay: -0.6s, -0.3s;
 }
 
