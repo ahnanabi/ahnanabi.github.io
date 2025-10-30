@@ -7,6 +7,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- 🔊 배경음악 두 곡 순차 반복 + 사운드 허용 버튼 -->
+  <audio id="bgm" preload="auto" playsinline></audio>
+
+  <div id="sound-gate" style="
+      position:fixed; inset:0; display:none; 
+      align-items:center; justify-content:center;
+      background:rgba(0,0,0,.55); z-index:9999;">
+    <button id="sound-gate-btn" style="
+        padding:12px 18px; border:0; border-radius:10px; 
+        background:#00adb5; color:#fff; font-size:16px; cursor:pointer;">
+      🔊 사운드 켜기
+    </button>
+  </div>
+
   <section class="hero">
     <!-- 오로라 레이어 (창문 마스크) -->
     <div class="aurora-layer">
@@ -42,15 +56,66 @@
   </div>
 
   <script>
-    // 아이템 클릭 → data-playlist 읽어서 모달 열기
+    // ===== 배경음악 제어 (두 곡 순차 반복) =====
+    const bgm = document.getElementById('bgm');
+    const soundGate = document.getElementById('sound-gate');
+    const soundGateBtn = document.getElementById('sound-gate-btn');
+
+    const tracks = ['audio/office1.mp3', 'audio/office2.mp3'];
+    let currentTrack = 0;
+
+    function loadTrack(i) {
+      bgm.src = tracks[i];
+      // 재생 시도 (자동재생 차단 시 실패 가능)
+      bgm.play().catch(() => {});
+    }
+
+    // 선호 볼륨 (원하면 조절)
+    bgm.volume = 0.65;
+
+    // 페이지 로드 후 첫 곡 재생 시도
+    function tryAutoPlay() {
+      loadTrack(currentTrack);
+      const p = bgm.play();
+      if (p && typeof p.then === 'function') {
+        p.then(() => {
+          soundGate.style.display = 'none';
+        }).catch(() => {
+          // 자동재생이 막힌 경우, 한 번만 허용 받도록 게이트 표시
+          soundGate.style.display = 'flex';
+        });
+      }
+    }
+    document.addEventListener('DOMContentLoaded', tryAutoPlay);
+
+    // 사용자가 사운드 허용 버튼을 누르면 재생 허용됨
+    soundGateBtn?.addEventListener('click', () => {
+      loadTrack(currentTrack);
+      bgm.play().finally(() => {
+        soundGate.style.display = 'none';
+      });
+    });
+
+    // 한 곡이 끝나면 다음 곡으로 (두 곡 순환)
+    bgm.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % tracks.length;
+      loadTrack(currentTrack);
+    });
+
+    // ===== 유튜브 모달 제어 + 배경음악 동기화 =====
     const popup  = document.getElementById('yt-popup');
     const player = document.getElementById('yt-player');
     const close  = document.getElementById('popup-close');
 
+    // 아이템 클릭 → data-playlist 읽어서 모달 열기
     document.querySelectorAll('.item').forEach(el => {
       el.addEventListener('click', () => {
         const url = el.dataset.playlist;
         if (!url) return;
+
+        // 유튜브 열릴 때 배경음악 일시정지
+        if (!bgm.paused) bgm.pause();
+
         // 자동재생 & 관련채널 최소화
         player.src = `${url}&autoplay=1&rel=0`;
         popup.style.display = 'flex';
@@ -62,8 +127,12 @@
     function closePopup() {
       popup.style.display = 'none';
       popup.setAttribute('aria-hidden', 'true');
-      player.src = ''; // 정지
+      player.src = ''; // 유튜브 정지
+
+      // 팝업 닫으면 배경음악 재개 시도
+      bgm.play().catch(() => {});
     }
+
     close.addEventListener('click', closePopup);
     popup.addEventListener('click', (e) => {
       if (e.target === popup) closePopup(); // 바깥 클릭으로 닫기
@@ -72,7 +141,16 @@
       if (e.key === 'Escape') closePopup();
     });
 
-</script>
+    // 탭 전환 배려: 떠나면 일시정지, 복귀 시 재생 시도
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (!bgm.paused) bgm.pause();
+      } else {
+        // 사용자 제스처가 있었던 세션이면 재생됨
+        bgm.play().catch(() => {});
+      }
+    });
+  </script>
 
 </body>
 </html>
