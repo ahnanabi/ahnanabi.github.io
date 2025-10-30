@@ -144,6 +144,8 @@ html, body {
   animation-delay: -0.6s, -0.3s;
 }
 
+.person2:hover { scale: 2; } 
+
 .person3 { left: 76.40%;  top: 30.52%;  animation-delay: -1.0s, -0.5s; }
 
 /* person4: 햄스터처럼 통통 튀게(세 번째 애니 추가) */
