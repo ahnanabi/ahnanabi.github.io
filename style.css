@@ -126,9 +126,9 @@ html, body {
 }
 
 /* 대략 배치(퍼센트 좌표) + 약간의 desync용 딜레이 */
-.person1 { left: 8%;   top: 68%;  animation-delay: -0.2s, -0.1s; }
-.person2 { left: 20%;  top: 72%;  transform: scale(1.4);  animation-delay: -0.6s, -0.3s; }
-.person3 { left: 33%;  top: 66%;  animation-delay: -1.0s, -0.5s; }
+.person1 { left: 38.03%;   top: 42.09%;  animation-delay: -0.2s, -0.1s; }
+.person2 { left: 34.9%;  top: 80.34%;  transform: scale(1.4);  animation-delay: -0.6s, -0.3s; }
+.person3 { left: 72.14%;  top: 28.83%;  animation-delay: -1.0s, -0.5s; }
 
 /* person4: 햄스터처럼 통통 튀게(세 번째 애니 추가) */
 .person4 {
