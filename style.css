@@ -45,67 +45,36 @@ html, body {
   mask-size: cover;
 }
 
-/* 실제 움직이는 오로라 텍스처 */
+/* 오로라 텍스처 */
 .aurora-layer .aurora {
   position: absolute;
   inset: -10%;
   background-image: var(--aurora-img);
   background-repeat: repeat;
-  background-size: 120% auto;    /* 디테일 강조 */
-  opacity: 0.8;                  /* 선명도 ↑ */
-  mix-blend-mode: lighten;       /* screen보다 밝게 */
-  filter: blur(0.5px) saturate(115%) brightness(105%);
+  background-size: 100% auto;    /* 작게 → 흐름 빨라보임 */
+  opacity: 0.9;                  /* 선명도 극대화 */
+  mix-blend-mode: lighten;       /* 색감 강조 */
+  filter: blur(0.3px) saturate(130%) brightness(120%);
   will-change: background-position, transform, opacity, filter;
 }
 
-/* 오로라 1: 빠른 좌→우 흐름 + 호흡(깜빡임) */
+/* 오로라 1: 매우 빠른 좌→우 흐름 + 호흡 효과 */
 .aurora-layer .aurora.a1 {
   animation:
-    aurora-flow-x 60s linear infinite,         /* 120s → 60s (2배 빠르게) */
-    aurora-drift-y 45s ease-in-out infinite,   /* 90s → 45s */
-    aurora-breathe 6s ease-in-out infinite;    /* 숨 쉬는 빛 효과 */
+    aurora-flow-x 20s linear infinite,         /* 💨 기존 60s → 20s */
+    aurora-drift-y 20s ease-in-out infinite,   /* 45s → 20s */
+    aurora-breathe 4s ease-in-out infinite;    /* 빠른 숨결 */
 }
 
-/* 오로라 2: 반대 방향, 다른 주기/位相으로 중첩 */
+/* 오로라 2: 반대 방향, 약간 다른 주기 */
 .aurora-layer .aurora.a2 {
-  opacity: 0.5;                  /* 살짝 약하게 */
-  background-size: 140% auto;
+  opacity: 0.6;
+  background-size: 120% auto;
   animation:
-    aurora-flow-x-rev 90s linear infinite,     /* 180s → 90s */
-    aurora-drift-y 55s ease-in-out infinite,   /* 110s → 55s */
-    aurora-breathe 8s ease-in-out infinite;    /* 주기 다르게 */
-  animation-delay: 0s, 0s, 1.2s; /* 호흡 위상 어긋나게 */
-}
-
-/* ===== 애니메이션들 ===== */
-
-/* 수평 이동(더 멀리 이동해 속도감 ↑) */
-@keyframes aurora-flow-x {
-  0%   { background-position: 0% 0%; }
-  100% { background-position: 150% 0%; }
-}
-
-/* 반대 방향 이동 */
-@keyframes aurora-flow-x-rev {
-  0%   { background-position: 150% 0%; }
-  100% { background-position: 0% 0%; }
-}
-
-/* 세로 미세 흔들림 */
-@keyframes aurora-drift-y {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-2.5%); }
-  100% { transform: translateY(0); }
-}
-
-/* 빛의 호흡(깜빡임) — 밝기/채도/불투명도에 파동 주기 */
-@keyframes aurora-breathe {
-  0%   { opacity: 0.70; filter: blur(0.5px) saturate(110%) brightness(100%) hue-rotate(0deg); }
-  25%  { opacity: 0.85; filter: blur(0.4px) saturate(120%) brightness(112%) hue-rotate(5deg); }
-  50%  { opacity: 0.95; filter: blur(0.35px) saturate(125%) brightness(120%) hue-rotate(8deg); }
-  75%  { opacity: 0.85; filter: blur(0.4px) saturate(118%) brightness(110%) hue-rotate(3deg); }
-  100% { opacity: 0.70; filter: blur(0.5px) saturate(110%) brightness(100%) hue-rotate(0deg); }
-}
+    aurora-flow-x-rev 25s linear infinite,     /* 90s → 25s */
+    aurora-drift-y 22s ease-in-out infinite,   /* 55s → 22s */
+    aurora-breathe 5s ease-in-out infinite;
+  }
 
 /* 모션 최소화 환경 대응 */
 @media (prefers-reduced-motion: reduce) {
