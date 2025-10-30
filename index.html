@@ -2,20 +2,77 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>오로라 마이크로사이트</title>
-
-  <!-- style.css 연결 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>오로라 오피스</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 배경 (사무실 전경) -->
   <section class="hero">
-    <!-- 오로라 레이어 -->
+    <!-- 오로라 레이어 (창문 마스크) -->
     <div class="aurora-layer">
       <div class="aurora a1"></div>
       <div class="aurora a2"></div>
     </div>
+
+    <!-- 픽셀 아이템들: 이미지 경로는 전부 images/*, 위치는 CSS에서 %, 재생목록은 data-playlist 로 연결 -->
+    <img src="images/dapyo2.png"   class="item person1" alt="사람1"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX1">
+    <img src="images/minesanim.png" class="item person2" alt="사람2"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX2">
+    <img src="images/namchakim.png" class="item person3" alt="사람3"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX3">
+    <img src="images/suin.png"      class="item person4" alt="사람4"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX4">
+    <img src="images/hamster.png"   class="item hamster" alt="햄스터"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX5">
+    <img src="images/fish1.png"     class="item plant1"  alt="화분1"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX6">
+    <img src="images/fish2.png"     class="item plant2"  alt="화분2"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX7">
+    <img src="images/mirro.png"     class="item mirror"  alt="거울"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX8">
+    <img src="images/gabage.png"    class="item trash"   alt="쓰레기통"
+         data-playlist="https://www.youtube.com/embed/videoseries?list=PLXXXX9">
   </section>
+
+  <!-- YouTube 모달 팝업 -->
+  <div id="yt-popup" class="popup" aria-hidden="true">
+    <div class="popup-inner" role="dialog" aria-modal="true" aria-label="YouTube Playlist">
+      <button id="popup-close" class="popup-close" aria-label="닫기">✕</button>
+      <iframe id="yt-player" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    // 아이템 클릭 → data-playlist 읽어서 모달 열기
+    const popup  = document.getElementById('yt-popup');
+    const player = document.getElementById('yt-player');
+    const close  = document.getElementById('popup-close');
+
+    document.querySelectorAll('.item').forEach(el => {
+      el.addEventListener('click', () => {
+        const url = el.dataset.playlist;
+        if (!url) return;
+        // 자동재생 & 관련채널 최소화
+        player.src = `${url}&autoplay=1&rel=0`;
+        popup.style.display = 'flex';
+        popup.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    // 닫기
+    function closePopup() {
+      popup.style.display = 'none';
+      popup.setAttribute('aria-hidden', 'true');
+      player.src = ''; // 정지
+    }
+    close.addEventListener('click', closePopup);
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) closePopup(); // 바깥 클릭으로 닫기
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePopup();
+    });
+  </script>
 </body>
 </html>
