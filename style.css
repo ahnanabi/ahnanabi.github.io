@@ -1,7 +1,7 @@
 :root {
-  /* 이미지 경로 (images 폴더 안에 있음) */
-  --office-img: url("images/back-office.png");  /* 공백 대신 하이픈 */
-  --window-mask: url("images/back.png");        /* 창문 부분만 불투명 */
+  /* 이미지 경로 (images 폴더) */
+  --office-img: url("images/back-office.png");  /* 사무실 전경 */
+  --window-mask: url("images/back-alpha.png");  /* 창문 알파 마스크 */
   --aurora-img: url("images/ororo.png");        /* 오로라 텍스처 */
 }
 
@@ -11,7 +11,7 @@ html, body {
   padding: 0;
   height: 100%;
   overflow: hidden;
-  background-color: #000; /* 로딩 중 깜박임 방지 */
+  background-color: #000; /* 로딩 시 깜박임 방지 */
 }
 
 /* 사무실 전경 배경 */
@@ -32,23 +32,20 @@ html, body {
   inset: 0;
   pointer-events: none;
 
-  /* ✅ 표준 마스크 (루미넌스 기반: 흑/백 이미지도 인식함) */
-  mask-image: var(--window-mask);
-  mask-mode: luminance; /* 흰색=보임, 검정=가림 */
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: cover;
-
-  /* ✅ WebKit 계열 (Chrome/Safari용, 알파 기반) */
+  /* ✅ 알파 마스크 기반 (Chrome/Safari용) */
   -webkit-mask-image: var(--window-mask);
-  -webkit-mask-mode: luminance; /* 함께 선언해 두면 루미넌스도 병행됨 */
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: cover;
+
+  /* ✅ 표준 문법 (Firefox 등 호환용) */
+  mask-image: var(--window-mask);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: cover;
 }
 
-
-/* 실제 움직이는 오로라 텍스처 */
+/* 오로라 텍스처 */
 .aurora-layer .aurora {
   position: absolute;
   inset: -10%;
@@ -56,7 +53,7 @@ html, body {
   background-repeat: repeat;
   background-size: 140% auto;
   opacity: 0.6;
-  mix-blend-mode: screen;
+  mix-blend-mode: screen; /* 배경과 부드럽게 섞이게 */
   filter: blur(1px);
   will-change: background-position, transform;
 }
@@ -75,7 +72,7 @@ html, body {
              aurora-drift-y 110s ease-in-out infinite;
 }
 
-/* 가로 이동 */
+/* 수평 이동 애니메이션 */
 @keyframes aurora-flow-x {
   0%   { background-position: 0% 0%; }
   100% { background-position: 100% 0%; }
