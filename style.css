@@ -195,11 +195,11 @@ html, body {
 .person2 { left: 20%;  top: 72%;  animation-duration: 2.1s, 4.2s; }
 .person3 { left: 33%;  top: 66%;  animation-duration: 1.9s, 3.8s; }
 .person4 { left: 45%;  top: 70%;  animation-duration: 2.2s, 4.4s; }
-.hamster  { left: 60%; top: 75%; }
-.plant1   { left: 72%; top: 76%; }
-.plant2   { left: 84%; top: 80%; }
-.mirror   { left: 15%; top: 40%; }
-.trash    { left: 90%; top: 85%; }
+.hamster  { left: 60%; top: 75%;  animation-duration: 1.9s, 3.8s; }
+.plant1   { left: 72%; top: 76%;  animation-duration: 1.9s, 3.8s; }
+.plant2   { left: 84%; top: 80%;  animation-duration: 1.9s, 3.8s; }
+.mirror   { left: 15%; top: 40%;  animation-duration: 1.9s, 3.8s; }
+.trash    { left: 90%; top: 85%;  animation-duration: 1.9s, 3.8s; }
 
 /* 화면이 작을 때는 동일 (원본 유지) */
 @media (max-width: 768px) {
