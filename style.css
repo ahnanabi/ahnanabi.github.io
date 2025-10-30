@@ -191,11 +191,11 @@ html, body {
 }
 
 /* 개체별 커스텀 속도 (전체적으로 1.3~1.5배 빠르게) */
-.person1 { left: 8%;   top: 68%;  animation-duration: 2.0s, 4.0s; }
-.person2 { left: 20%;  top: 72%;  animation-duration: 2.1s, 4.2s; }
-.person3 { left: 33%;  top: 66%;  animation-duration: 1.9s, 3.8s; }
-.person4 { left: 45%;  top: 70%;  animation-duration: 2.2s, 4.4s; }
-.hamster  { left: 60%; top: 75%;  animation-duration: 1.9s, 3.8s; }
+.person1 { left: 8%;   top: 68%;  animation-duration: 1.0s, 2.0s; }
+.person2 { left: 20%;  top: 72%;  animation-duration: 1.1s, 2.2s; }
+.person3 { left: 33%;  top: 66%;  animation-duration: 1.9s, 2.8s; }
+.person4 { left: 45%;  top: 70%;  animation-duration: 1.2s, 2.4s; }
+.hamster  { left: 60%; top: 75%;  animation-duration: 1.0s, 2.8s; }
 .plant1   { left: 72%; top: 76%;  animation-duration: 1.9s, 3.8s; }
 .plant2   { left: 84%; top: 80%;  animation-duration: 1.9s, 3.8s; }
 .mirror   { left: 15%; top: 40%;  animation-duration: 1.9s, 3.8s; }
@@ -211,23 +211,23 @@ html, body {
 ========================= */
 .hamster {
   animation:
-    idle-float 2.0s linear infinite,
-    idle-sway  4.0s linear infinite,
+    idle-float 1.0s linear infinite,
+    idle-sway  2.0s linear infinite,
     hamster-bop 6s ease-in-out infinite; /* 9s → 6s */
   animation-delay: .05s, .15s, 0.8s;
 }
 .plant1, .plant2 {
   animation:
     idle-float 2.4s linear infinite,
-    idle-sway  4.6s linear infinite,
-    idle-glow  3.2s linear infinite;      /* 5.5s → 3.2s */
+    idle-sway  2.6s linear infinite,
+    idle-glow  2.2s linear infinite;      /* 5.5s → 3.2s */
   animation-delay: .1s, .2s, .4s;
 }
 .mirror {
   animation:
     idle-float 2.3s linear infinite,
-    idle-sway  4.4s linear infinite,
-    idle-shimmer 3.4s linear infinite;    /* 6s → 3.4s */
+    idle-sway  1.4s linear infinite,
+    idle-shimmer 1.4s linear infinite;    /* 6s → 3.4s */
   animation-delay: .1s, .2s, .3s;
 }
 .trash {
