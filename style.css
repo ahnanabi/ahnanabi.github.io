@@ -1,8 +1,8 @@
 :root {
-  /* 이미지 경로 (images 폴더 안에 있음) */
-  --office-img: url("images/back-office.png");  /* 공백 대신 하이픈 */
-  --window-mask: url("images/back-alpha.png");        /* 창문 부분만 불투명 */
-  --aurora-img: url("images/ororo.png");        /* 오로라 텍스처 */
+  /* 이미지 경로 (images 폴더) */
+  --office-img: url("images/back-office.png");   /* 사무실 전경 */
+  --window-mask: url("images/back-alpha.png");   /* 창문 알파 마스크 (창문=불투명, 나머지=투명) */
+  --aurora-img: url("images/ororo.png");         /* 오로라 텍스처 */
 }
 
 /* 전체 화면 기본 설정 */
@@ -11,7 +11,7 @@ html, body {
   padding: 0;
   height: 100%;
   overflow: hidden;
-  background-color: #000; /* 로딩 중 깜박임 방지 */
+  background-color: #000; /* 로딩 시 깜박임 방지 */
 }
 
 /* 사무실 전경 배경 */
@@ -32,15 +32,17 @@ html, body {
   inset: 0;
   pointer-events: none;
 
-  mask-image: var(--window-mask);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: cover;
-
+  /* 알파 마스크 기반 (Chrome/Safari) */
   -webkit-mask-image: var(--window-mask);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: cover;
+
+  /* 표준 문법 (Firefox 등) */
+  mask-image: var(--window-mask);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: cover;
 }
 
 /* 실제 움직이는 오로라 텍스처 */
@@ -49,49 +51,65 @@ html, body {
   inset: -10%;
   background-image: var(--aurora-img);
   background-repeat: repeat;
-  background-size: 140% auto;
-  opacity: 0.6;
-  mix-blend-mode: screen;
-  filter: blur(1px);
-  will-change: background-position, transform;
+  background-size: 120% auto;    /* 디테일 강조 */
+  opacity: 0.8;                  /* 선명도 ↑ */
+  mix-blend-mode: lighten;       /* screen보다 밝게 */
+  filter: blur(0.5px) saturate(115%) brightness(105%);
+  will-change: background-position, transform, opacity, filter;
 }
 
-/* 오로라 1: 좌→우 흐름 */
+/* 오로라 1: 빠른 좌→우 흐름 + 호흡(깜빡임) */
 .aurora-layer .aurora.a1 {
-  animation: aurora-flow-x 120s linear infinite,
-             aurora-drift-y 90s ease-in-out infinite;
+  animation:
+    aurora-flow-x 60s linear infinite,         /* 120s → 60s (2배 빠르게) */
+    aurora-drift-y 45s ease-in-out infinite,   /* 90s → 45s */
+    aurora-breathe 6s ease-in-out infinite;    /* 숨 쉬는 빛 효과 */
 }
 
-/* 오로라 2: 반대 방향으로 중첩 */
+/* 오로라 2: 반대 방향, 다른 주기/位相으로 중첩 */
 .aurora-layer .aurora.a2 {
-  opacity: 0.4;
-  background-size: 160% auto;
-  animation: aurora-flow-x-rev 180s linear infinite,
-             aurora-drift-y 110s ease-in-out infinite;
+  opacity: 0.5;                  /* 살짝 약하게 */
+  background-size: 140% auto;
+  animation:
+    aurora-flow-x-rev 90s linear infinite,     /* 180s → 90s */
+    aurora-drift-y 55s ease-in-out infinite,   /* 110s → 55s */
+    aurora-breathe 8s ease-in-out infinite;    /* 주기 다르게 */
+  animation-delay: 0s, 0s, 1.2s; /* 호흡 위상 어긋나게 */
 }
 
-/* 가로 이동 */
+/* ===== 애니메이션들 ===== */
+
+/* 수평 이동(더 멀리 이동해 속도감 ↑) */
 @keyframes aurora-flow-x {
   0%   { background-position: 0% 0%; }
-  100% { background-position: 100% 0%; }
+  100% { background-position: 150% 0%; }
 }
 
 /* 반대 방향 이동 */
 @keyframes aurora-flow-x-rev {
-  0%   { background-position: 100% 0%; }
+  0%   { background-position: 150% 0%; }
   100% { background-position: 0% 0%; }
 }
 
-/* 세로 흔들림 */
+/* 세로 미세 흔들림 */
 @keyframes aurora-drift-y {
   0%   { transform: translateY(0); }
-  50%  { transform: translateY(-1.5%); }
+  50%  { transform: translateY(-2.5%); }
   100% { transform: translateY(0); }
 }
 
-/* 모션 줄이기 환경 대응 (테스트 중엔 주석 처리 가능) */
+/* 빛의 호흡(깜빡임) — 밝기/채도/불투명도에 파동 주기 */
+@keyframes aurora-breathe {
+  0%   { opacity: 0.70; filter: blur(0.5px) saturate(110%) brightness(100%) hue-rotate(0deg); }
+  25%  { opacity: 0.85; filter: blur(0.4px) saturate(120%) brightness(112%) hue-rotate(5deg); }
+  50%  { opacity: 0.95; filter: blur(0.35px) saturate(125%) brightness(120%) hue-rotate(8deg); }
+  75%  { opacity: 0.85; filter: blur(0.4px) saturate(118%) brightness(110%) hue-rotate(3deg); }
+  100% { opacity: 0.70; filter: blur(0.5px) saturate(110%) brightness(100%) hue-rotate(0deg); }
+}
+
+/* 모션 최소화 환경 대응 */
 @media (prefers-reduced-motion: reduce) {
   .aurora-layer .aurora {
-    animation: none;
+    animation: none !important;
   }
 }
