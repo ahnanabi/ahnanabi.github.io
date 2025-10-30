@@ -32,16 +32,21 @@ html, body {
   inset: 0;
   pointer-events: none;
 
+  /* ✅ 표준 마스크 (루미넌스 기반: 흑/백 이미지도 인식함) */
   mask-image: var(--window-mask);
+  mask-mode: luminance; /* 흰색=보임, 검정=가림 */
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: cover;
 
+  /* ✅ WebKit 계열 (Chrome/Safari용, 알파 기반) */
   -webkit-mask-image: var(--window-mask);
+  -webkit-mask-mode: luminance; /* 함께 선언해 두면 루미넌스도 병행됨 */
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: cover;
 }
+
 
 /* 실제 움직이는 오로라 텍스처 */
 .aurora-layer .aurora {
