@@ -7,7 +7,7 @@
   /* 전역 애니 속도 (숫자 줄일수록 더 자주/빠르게) */
   --idle-float: 1.4s;
   --idle-sway:  2.8s;
-  --bop:        4.2s;  /* 통통 튐 */
+  --bop:        1.2s;  /* 통통 튐 */
   --glow:       2.0s;
   --shimmer:    2.2s;
   --wobble:     5.5s;
@@ -127,7 +127,7 @@ html, body {
 
 /* 대략 배치(퍼센트 좌표) + 약간의 desync용 딜레이 */
 .person1 { left: 8%;   top: 68%;  animation-delay: -0.2s, -0.1s; }
-.person2 { left: 20%;  top: 72%;  animation-delay: -0.6s, -0.3s; }
+.person2 { left: 20%;  top: 72%;  transform: scale(1.4);  animation-delay: -0.6s, -0.3s; }
 .person3 { left: 33%;  top: 66%;  animation-delay: -1.0s, -0.5s; }
 
 /* person4: 햄스터처럼 통통 튀게(세 번째 애니 추가) */
