@@ -140,7 +140,7 @@ html, body {
 .person2 {
   left: 45.11%;
   top: 86.34%;
-  scale: 4;                        /* ✅ 크기 2배 (애니메이션과 충돌 없음) */
+  scale: 2;                        /* ✅ 크기 2배 (애니메이션과 충돌 없음) */
   animation-delay: -0.6s, -0.3s;
 }
 
@@ -161,7 +161,7 @@ html, body {
 .plant1   { left: 54.99%; top: 74.15%; }
 .plant2   { left: 63.41%; top: 73.72%; }
 .mirror   { left: 25.03%; top: 52.38%; }
-.trash    { left: 20.91%; top: 28.68%; }
+.trash    { left: 20.91%; top: 73.78%; }
 
 /* 화면이 작을 때 더 줄이기 */
 @media (max-width: 768px) {
