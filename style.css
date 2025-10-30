@@ -126,13 +126,13 @@ html, body {
 }
 
 /* 대략 배치(퍼센트 좌표) + 약간의 desync용 딜레이 */
-.person1 { left: 38.03%;   top: 42.09%;  animation-delay: -0.2s, -0.1s; }
-.person2 { left: 34.9%;  top: 80.34%;  transform: scale(1.4);  animation-delay: -0.6s, -0.3s; }
-.person3 { left: 72.14%;  top: 28.83%;  animation-delay: -1.0s, -0.5s; }
+.person1 { left: 37.66%;  top: 41.46%;  animation-delay: -0.2s, -0.1s; }
+.person2 { left: 45.11%;  top: 86.34%;  transform: scale(2);  animation-delay: -0.6s, -0.3s; }
+.person3 { left: 76.40%;  top: 30.52%;  animation-delay: -1.0s, -0.5s; }
 
 /* person4: 햄스터처럼 통통 튀게(세 번째 애니 추가) */
 .person4 {
-  left: 45%; top: 70%;
+  left: 61.56%; top: 62.51%;
   animation:
     idle-float var(--idle-float) linear infinite,
     idle-sway  var(--idle-sway)  linear infinite,
@@ -140,11 +140,11 @@ html, body {
   animation-delay: -0.3s, -0.15s, 0.9s;
 }
 
-.hamster  { left: 60%; top: 75%; }
-.plant1   { left: 72%; top: 76%; }
-.plant2   { left: 84%; top: 80%; }
-.mirror   { left: 15%; top: 40%; }
-.trash    { left: 90%; top: 85%; }
+.hamster  { left: 63.91%; top: 28.68%; }
+.plant1   { left: 54.99%; top: 74.15%; }
+.plant2   { left: 63.41%; top: 73.72%; }
+.mirror   { left: 25.03%; top: 52.38%; }
+.trash    { left: 63.91%; top: 28.68%; }
 
 /* 화면이 작을 때 더 줄이기 */
 @media (max-width: 768px) {
