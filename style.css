@@ -51,7 +51,7 @@ html, body {
   inset: -10%;
   background-image: var(--aurora-img);
   background-repeat: repeat;
-  background-size: 100% auto;    /* 작게 → 흐름 빨라보임 */
+  background-size: 80% auto;    /* 작게 → 흐름 빨라보임 */
   opacity: 0.9;                  /* 선명도 극대화 */
   mix-blend-mode: lighten;       /* 색감 강조 */
   filter: blur(0.3px) saturate(130%) brightness(120%);
@@ -61,7 +61,7 @@ html, body {
 /* 오로라 1: 매우 빠른 좌→우 흐름 + 호흡 효과 */
 .aurora-layer .aurora.a1 {
   animation:
-    aurora-flow-x 20s linear infinite,         /* 💨 기존 60s → 20s */
+    aurora-flow-x 10s linear infinite,         /* 💨 기존 60s → 20s */
     aurora-drift-y 20s ease-in-out infinite,   /* 45s → 20s */
     aurora-breathe 4s ease-in-out infinite;    /* 빠른 숨결 */
 }
@@ -71,7 +71,7 @@ html, body {
   opacity: 0.6;
   background-size: 120% auto;
   animation:
-    aurora-flow-x-rev 25s linear infinite,     /* 90s → 25s */
+    aurora-flow-x-rev 15s linear infinite,     /* 90s → 25s */
     aurora-drift-y 22s ease-in-out infinite,   /* 55s → 22s */
     aurora-breathe 5s ease-in-out infinite;
   }
